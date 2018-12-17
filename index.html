@@ -10,74 +10,50 @@
     }
   </style>
 </header>
-<body>
-<input id="myInput" type="text" placeholder="Search..">
-<button onclick="myFunction()" type="submit" >Submit</button>
-<button onclick="randomizer()" type="submit">Randomizer</button>
 
-<!--
-<table>
-<tr>
-  <th> Title </th>
-  <th> Description </th>
-  <th> Link </th>
-</tr>
-<tr>
-  <th id=tableResult1> Result 1 </th>
-  <th id=tableDescription1> Description 1 </th>
-  <th id=tableLink1> Link 1 </th>
-</tr>
-<p id=results></p>
-<p id=results2></p>
-<p id=results3></p>
-<p id=results4></p>
-<p id=results5></p>
-<p id=results6></p>
-<p id=results7></p>
-<p id=results8></p>
-<p id=results9></p>
-<p id=results10></p>
-</table>
--->
-<p id=results></p>
-<p id=description1></p>
-<div id=div1>
-<p id=results></p>
-<p id=description1></p>
-<a id="link1" type="submit" href="#"></a>
-</div>
+<body>
+  <input id="myInput" type="text" placeholder="Search..">
+  <button onclick="myFunction()" type="submit">Submit</button>
+  <button onclick="randomizer()" type="submit">Randomizer</button>
+
+  <p id=results></p>
+  <p id=description1></p>
+  <div id=div1>
+    <p id=results></p>
+    <p id=description1></p>
+    <a id="link1" href="#" target="_blank"></a>
+  </div>
 
 </body>
 <script>
+  var input = document.getElementById("myInput").value;
+  var titleResults = document.getElementById("results");
+  var description = document.getElementById("description1");
+  var link = document.getElementById("link1");
 
-var input = document.getElementById("myInput").value;
-var titleResults = document.getElementById("results");
-var description = document.getElementById("description1");
-var link = document.getElementById("link1");
-
-function myFunction() {
-  var searchinput = document.getElementById("myInput").value;
-  var wikiApi = "https://en.wikipedia.org/w/api.php?action=opensearch&origin=*&search=" + searchinput + "&namespace=&limit=10";
-  var request = new XMLHttpRequest();
-  request.open('GET', wikiApi, true);
-  request.onload = function() {
-  var data = JSON.parse(this.response);
-  var titleStr = String(data[1][0]);
-  var titleStrBreaks = titleStr.replace(/,/g, "<br />");
-  var descriptionStr = String(data[2][0]);
-  url = String(data[3][0]);
-  document.getElementById("description1").innerHTML = descriptionStr + "...";
-  document.getElementById("results").innerHTML = titleStr;
-  document.getElementById("link1").innerHTML = "Link";
-  document.getElementById("link1").href = url;
-  var descriptionStrBreaks = descriptionStr.replace(/,/g, "<br />");
+  function myFunction() {
+    var searchinput = document.getElementById("myInput").value;
+    var wikiApi = "https://en.wikipedia.org/w/api.php?action=opensearch&origin=*&search=" + searchinput + "&namespace=&limit=10";
+    var request = new XMLHttpRequest();
+    request.open('GET', wikiApi, true);
+    request.onload = function() {
+      var data = JSON.parse(this.response);
+      var titleStr = String(data[1][0]);
+      var titleStrBreaks = titleStr.replace(/,/g, "<br />");
+      var descriptionStr = String(data[2][0]);
+      url = String(data[3][0]);
+      document.getElementById("description1").innerHTML = descriptionStr + "...";
+      document.getElementById("results").innerHTML = titleStr;
+      document.getElementById("link1").innerHTML = "Link";
+      document.getElementById("link1").href = url;
+      var descriptionStrBreaks = descriptionStr.replace(/,/g, "<br />");
+    }
+    request.send();
   }
-  request.send();
-}
 
-function randomizer() {
-  window.open("https://en.wikipedia.org/wiki/Special:Random",'_blank');
-}
-
+  function randomizer() {
+    window.open("https://en.wikipedia.org/wiki/Special:Random", '_blank');
+  }
 </script>
+
 </html>
